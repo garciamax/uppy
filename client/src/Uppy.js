@@ -28,7 +28,7 @@ const Uppy = ({uploadDone = () => null}) => {
         }catch (e) {
             setShowFallback(true);
         }
-    }, []);
+    }, [uploadDone]);
 
     return (
             <div className="UppyForm">
