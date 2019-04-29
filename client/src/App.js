@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import Uppy from "./Uppy";
 
 const fetchService = (request) => {
@@ -15,16 +15,17 @@ const fetchService = (request) => {
 
 const App = () => {
     const [files, setFiles] = useState([]);
-    const updateFilesList = () => {
+    const updateFilesList = useCallback(() => {
         const myRequest = new Request('/files');
         fetchService(myRequest).then(data=>{
             const {files = []} = data;
             setFiles(files);
         })
-    };
+    }, []);
+
     useEffect(()=>{
         updateFilesList();
-    },[]);
+    },[updateFilesList]);
 
     const onClick = file => () =>{
         const myRequest = new Request('/delete', {
